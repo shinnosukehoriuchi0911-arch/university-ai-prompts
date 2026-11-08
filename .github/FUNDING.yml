@@ -1,0 +1,4 @@
+# GitHub Funding configuration
+# Official documentation: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/displaying-a-sponsor-button-in-your-repository
+
+custom: ["https://zenn.dev/shinai/books/university-ai-assignment-prompts"]
