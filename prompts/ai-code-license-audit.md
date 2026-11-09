@@ -21,12 +21,12 @@ GitHub CopilotやChatGPT、Claude等のAIアシスタントを使ってプログ
 
 ---
 
-## 付録: GitHub Actions による自動検査ワークフロー
+## 付録: GitHub Actions による簡易点検の例（補助）
 
-リポジトリの `.github/workflows/ai-code-audit.yml` に以下を配置することで、プルリクエスト時にAI生成コードのシークレット漏洩やライセンス汚染を自動検知できます。
+リポジトリの `.github/workflows/ai-code-audit.yml` に以下を配置すると、プルリクエスト時に `api_key` / `secret_token` という文字列が含まれるファイルを知らせます。これは文字列検索だけの簡易な点検で、シークレット漏洩やライセンス上の問題の有無を保証・判定するものではありません。実際のライセンス確認は依存関係ごとに人が行ってください。
 
 ```yaml
-name: "AI Code & License Compliance Audit"
+name: "Simple Keyword Check (api_key / secret_token)"
 on: [push, pull_request]
 
 jobs:
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: "Scan for hardcoded secrets and copyleft contamination"
+      - name: "Grep for api_key / secret_token strings"
         shell: pwsh
         run: |
           $files = Get-ChildItem -Recurse -Include *.py,*.js,*.ts,*.go,*.java
@@ -45,5 +45,5 @@ jobs:
                   exit 1
               }
           }
-          Write-Host "Compliance audit passed!"
+          Write-Host "Keyword check finished (no match; this is not a license or security audit)."
 ```
